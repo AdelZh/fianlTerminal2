@@ -9,3 +9,92 @@
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
+
+
+Server [localhost]: localhost
+Database [postgres]:
+Port [5432]:
+Username [postgres]: postgres
+Пароль пользователя postgres:
+psql (16.0)
+ПРЕДУПРЕЖДЕНИЕ: Кодовая страница консоли (866) отличается от основной
+                страницы Windows (1251).
+                8-битовые (русские) символы могут отображаться некорректно.
+                Подробнее об этом смотрите документацию psql, раздел
+                "Notes for Windows users".
+Введите "help", чтобы получить справку.
+
+postgres=# CREATE TABLE university1(
+postgres(# id serial primary key,
+postgres(# name VARCHAR(50),
+postgres(# address VARCHAR(50),
+postgres(#  location VARCHAR
+postgres(# );
+CREATE TABLE
+
+
+postgres=# CREATE TABLE faculty(
+postgres(# id SERIAL primary key,
+postgres(# name VARCHAR NOT NULL,
+postgres(# university1_id INTEGER REFERENCES university1(id)
+postgres(# );
+CREATE TABLE
+
+
+postgres=# CREATE TABLE teacher(
+postgres(# id SERIAL primary key,
+postgres(#  name VARCHAR(50),
+postgres(#  phone VARCHAR,
+postgres(# salary bigint,
+postgres(# university1_id INTEGER REFERENCES university1(id)
+postgres(# );
+CREATE TABLE
+
+
+postgres=# CREATE TABLE students(
+postgres(# id SERIAL primary key,
+postgres(# name VARCHAR(50),
+postgres(# phone VARCHAR,
+postgres(# contract_price bigint,
+postgres(# university1_id INTEGER REFERENCES university1(id)
+postgres(# );
+CREATE TABLE
+
+
+postgres=# INSERT INTO university1 (name, address, location)
+postgres-# VALUES ('Cambridge', '456 Elm St', 'Town'),
+postgres-# ('Harvard', '800 Oak St', 'Village'),
+postgres-# ('Princeton University', '44 Oak St', 'New York');
+INSERT 0 3
+
+                                                               ^
+postgres=# ALTER TABLE students ADD email VARCHAR(100);
+ALTER TABLE
+
+
+postgres=# INSERT INTO students (name, phone, contract_price, email, university1_id)
+postgres-# VALUES  ('Alice Johnson', '555-123-4567', 15000, 'alice@gmail.com',1),
+postgres-#  ('Bob Smith', '555-234-5678', 14000,'bob@gmail.com',2),
+postgres-#  ('Charlie Brown', '555-345-6789', 16000, 'char@gmail.com',1),
+postgres-#  ('David Lee', '555-456-7890', 15500, 'david@gmail.com',3),
+postgres-#  ('Eva Martinez', '555-567-8901', 14800, 'eva@gmail.com', 2);
+INSERT 0 5
+
+          ^
+postgres=#  INSERT INTO faculty (name, university1_id)
+postgres-# VALUES ('Computer Science Department',1),
+postgres-# ('Mathematics Department',2),
+postgres-#  ('Physics Department',2),
+postgres-#  ('English Department',3),
+postgres-# ('History Department',3);
+INSERT 0 5
+
+
+postgres=# INSERT INTO teacher (name, phone, salary, university1_id)
+postgres-# VALUES ('John Smith', '555-123-4567', 55000,1),
+postgres-#  ('Mary Johnson', '555-234-5678', 60000, 2),
+postgres-#  ('David Lee', '555-345-6789', 52000,2),
+postgres-# ('Emily Brown', '555-456-7890', 58000, 3),
+postgres-#  ('Michael Martinez', '555-567-8901', 54000,1);
+INSERT 0 5
+
